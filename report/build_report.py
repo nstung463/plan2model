@@ -631,7 +631,8 @@ for line in [f"Repository: {REPO_URL}",
              "python prototype/tune.py — grid search on validation → prototype/params.json",
              "python prototype/eval_cubicasa.py test — frozen-parameter evaluation, ablation, figures of predictions",
              "python prototype/unet_wall.py train 3000 ; python prototype/eval_unet.py — U-Net training and evaluation (CPU)",
-             f"Demo video: {VIDEO_URL} (Plan2Model_video.mp4)"]:
+             f"Demo video: {VIDEO_URL} (Plan2Model_video.mp4)",
+             "Dataset: https://github.com/nstung463/plan2model/releases/download/v1.0/plan2model_dataset.zip (CubiCasa5K subset + synthetic images; unzip into prototype/data/)"]:
     c.para(line, space_before=60, size=11)
 c.para("**Appendix C. Declaration of AI Tool Usage**", space_before=240)
 c.para("In accordance with the course regulations, the group declares the following use of AI tools. "

@@ -17,6 +17,7 @@ Dự án nhóm môn **Xử lý Ảnh và Video số**, MSE – FPT University.
 |---|---|
 | Báo cáo | [`report/Plan2Model_Report.pdf`](report/Plan2Model_Report.pdf) (bản Word: `report/Plan2Model_Report.docx`) |
 | Video demo | [Release v1.0 → `Plan2Model_video.mp4`](https://github.com/nstung463/plan2model/releases/tag/v1.0) (8:47) |
+| Dataset | [Release v1.0 → `plan2model_dataset.zip`](https://github.com/nstung463/plan2model/releases/download/v1.0/plan2model_dataset.zip) (157 MB, 405 ảnh CubiCasa5K có nhãn + ảnh tổng hợp) |
 | Trọng số U-Net | [Release v1.0 → `unet_wall.pt`](https://github.com/nstung463/plan2model/releases/tag/v1.0) |
 | Kết quả chi tiết | [`prototype/RESULTS.md`](prototype/RESULTS.md) |
 
@@ -126,7 +127,19 @@ python prototype/run_demo.py   # ảnh mô phỏng → prototype/output/floorpla
 
 ## Dữ liệu
 
-Dữ liệu không đưa lên Git. CubiCasa5K được tải từng phần (HTTP range, ~60 MB) theo split chính thức:
+**Cách 1, tải bộ dữ liệu nhóm đã dùng:** tải [`plan2model_dataset.zip`](https://github.com/nstung463/plan2model/releases/download/v1.0/plan2model_dataset.zip) rồi giải nén vào `prototype/data/`.
+
+| Phần | Số ảnh | Dùng để |
+|---|---|---|
+| `cubicasa/val` | 45 (15 ảnh/nhóm) | tune tham số |
+| `cubicasa/test` | 60 (20 ảnh/nhóm) | đánh giá, giữ nguyên tham số |
+| `cubicasa/train` | 300 | chỉ để train U-Net so sánh |
+| `photo.jpg`, `plan_clean.png`, `gt_wall.png` | 1 bộ | ảnh tổng hợp do nhóm tự sinh (`prototype/synth.py`) |
+
+- Mỗi ảnh CubiCasa gồm `F1_scaled.png` (ảnh bản vẽ) và `model.svg` (nhãn tường và phòng).
+- Nguồn: CubiCasa5K (Kalervo và cộng sự, SCIA 2019), [zenodo.org/records/2613548](https://zenodo.org/records/2613548), giấy phép CC BY-NC 4.0.
+
+**Cách 2, tự tải lại từ nguồn gốc:** script tải từng phần (HTTP range, ~60 MB) theo split chính thức:
 
 ```bash
 python prototype/fetch_cubicasa.py val 45
