@@ -617,11 +617,11 @@ set_par_text(app_title, "Appendices")
 c = Cursor(app_title._p)
 c.para("**Appendix A. Task Allocation**", space_before=240)
 c.table(["Member", "Main responsibilities", "Contribution (%)"],
-        [["Nguyễn Thu Trang [TBD]", "Page rectification, illumination, Sauvola (self-implemented), synthetic data", "[TBD]"],
-         ["Nguyễn Văn Thụ [TBD]", "Wall extraction, hollow-wall filling, room segmentation, DXF/3D export", "[TBD]"],
-         ["Nguyễn Hoàng Khôi Minh [TBD]", "CubiCasa5K tooling, tuning/evaluation protocol, bootstrap, U-Net", "[TBD]"],
-         ["Nguyễn Sơn Tùng [TBD]", "Demo application, video, report and slides", "[TBD]"]],
-        [3.4, 8.6, 2.8], "Task allocation (to be confirmed by the group).")
+        [["Nguyễn Sơn Tùng (lead)", "Project coordination and system design; integration of the pipeline (core.py); Streamlit demo application; demo video; report writing and final editing", "28"],
+         ["Nguyễn Thu Trang", "Page detection and perspective rectification; illumination flattening; self-implemented Sauvola threshold and its verification; synthetic plan and phone-photo generator", "24"],
+         ["Nguyễn Văn Thụ", "Wall candidate extraction (colour cue, hollow-wall filling); door closing and room segmentation; vectorisation, DXF/JSON export and 3D model", "24"],
+         ["Nguyễn Hoàng Khôi Minh", "CubiCasa5K download and ground-truth parsing; grid-search tuning and test protocol; ablation and bootstrap analysis; U-Net training and comparison", "24"]],
+        [3.8, 8.6, 2.4], "Task allocation and contribution.")
 c.para("**Appendix B. How to Run**", space_before=240)
 for line in [f"Repository: {REPO_URL}",
              "pip install -r requirements.txt",
