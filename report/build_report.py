@@ -17,7 +17,7 @@ OUT = os.path.join(HERE, "Plan2Model_Report.docx")
 FIG = os.path.join(HERE, "figures")
 
 TITLE = "Plan2Model: From Phone Photos of Paper Floor Plans to CAD Drawings and 3D Models with Classical Image Processing"
-MEMBERS = ["Nguyễn Thu Trang – [TBD] Student ID", "Nguyễn Văn Thụ – 26ms23346",
+MEMBERS = ["Nguyễn Thu Trang", "Nguyễn Văn Thụ – 26ms23346",
            "Nguyễn Sơn Tùng – 26ms23347", "Nguyễn Hoàng Khôi Minh – 26ms23356"]
 REPO_URL = "https://github.com/nstung463/plan2model"
 VIDEO_URL = "https://github.com/nstung463/plan2model/releases/tag/v1.0"
