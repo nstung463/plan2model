@@ -26,7 +26,7 @@ Dự án nhóm môn **Xử lý Ảnh và Video số**, MSE – FPT University.
 | Thành viên | MSHV | Phần việc chính |
 |---|---|---|
 | Nguyễn Thu Trang | | Tìm và nắn tờ giấy, làm phẳng sáng, tự cài Sauvola và kiểm chứng, sinh dữ liệu tổng hợp |
-| Nguyễn Văn Thụ | | Lấy tường (kênh màu, lấp tường rỗng), đóng cửa, tách phòng, xuất DXF/JSON và mô hình 3D |
+| Nguyễn Văn Thụ | 26ms23346 | Lấy tường (kênh màu, lấp tường rỗng), đóng cửa, tách phòng, xuất DXF/JSON và mô hình 3D |
 | Nguyễn Sơn Tùng (nhóm trưởng) | 26ms23347 | Điều phối, thiết kế hệ thống, tích hợp pipeline, app Streamlit, video demo, viết và hoàn thiện báo cáo |
 | Nguyễn Hoàng Khôi Minh | 26ms23356 | Tải và đọc nhãn CubiCasa5K, tune trên val, đánh giá test, ablation, bootstrap, U-Net so sánh |
 
