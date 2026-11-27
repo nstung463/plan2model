@@ -256,8 +256,7 @@ for base in (9, 25):
         else:
             set_par_text(p, "")
 for idx in (17, 36):
-    set_par_text(P[idx], f"© Copyright by Group [TBD] – {YEAR}")
-    for r in P[idx].runs: r.font.highlight_color = WD_COLOR_INDEX.YELLOW
+    set_par_text(P[idx], f"© Copyright by the authors – {YEAR}")
 
 # ================= ABSTRACT =================
 set_par_text(P[38], TITLE)
@@ -270,7 +269,10 @@ ABSTRACT = ("Digitising paper floor plans is a routine but manual task in constr
             "segments rooms with directional closing and connected components. On 60 official CubiCasa5K test "
             "images, with all parameters tuned on the validation split, the method reaches a wall IoU of 0.560 "
             "and a room F1 of 0.454, compared with 0.473 and 0.316 for a tuned Otsu baseline; both gains are "
-            "significant under a paired bootstrap. Ablation shows that hollow-wall filling is the key component.")
+            "significant under a paired bootstrap. Ablation shows that hollow-wall filling is the key component. "
+            "For comparison, a U-Net with a ResNet-18 encoder trained on 300 images reaches a wall IoU of 0.774 "
+            "and a room F1 of 0.565, at the cost of labelled data and hours of training. The pipeline is packaged "
+            "as an interactive Streamlit application that exports DXF, JSON and 3D models.")
 set_par_text(P[40], ABSTRACT)
 remove(P[41])
 
@@ -323,7 +325,7 @@ c.bullets([
     "outlined, hatched or coloured) and is the main source of improvement in our experiments.",
     "A rigorous evaluation on the public CubiCasa5K benchmark with an official validation/test split, tuned baselines, "
     "an ablation study, a paired bootstrap significance test and an error analysis.",
-    "A comparison against a learned model (U-Net [13] with a ResNet-18 encoder) trained on the same data, which is clearly stronger on walls (wall IoU 0.774 vs 0.560) and shows where the classical pipeline stands.",
+    "A comparison against a learned model (U-Net [13] with a ResNet-18 encoder) trained on 300 images of the official training split; it is clearly more accurate on walls (wall IoU 0.774 vs 0.560) and shows where the classical pipeline stands.",
 ])
 c.heading("Report Organisation", 1)
 c.para("Chapter 2 reviews related work. Chapter 3 describes the dataset and each processing stage. Chapter 4 reports "
@@ -366,7 +368,7 @@ c.para("**Synthetic phone photos.** To measure the full pipeline including page 
        "noise, blur and JPEG compression. The exact wall mask and room areas are known.")
 c.para("**CubiCasa5K [6].** Real Finnish floor plans with SVG annotations. We use the official split files and take "
        "the first images of each of the three image categories, without manual selection. Only the archive entries "
-       "needed are fetched by HTTP range requests (about 20 MB instead of the full 5.2 GB). Ground-truth wall masks and "
+       "needed are fetched by HTTP range requests (about 40 MB for the validation and test images and about 150 MB more for the training images, instead of the full 5.2 GB). Ground-truth wall masks and "
        "room masks are rasterised from the SVG polygons on the *F1_scaled* image, as in the official loader; room "
        "classes Outdoor and Undefined are ignored.")
 c.table(["Split", "Architectural", "High quality", "Colorful", "Total", "Used for"],
@@ -382,16 +384,16 @@ c.para("Figure {fig:block} gives the block diagram of the method and Figure {fig
        "synthetic phone photo. Page detection and rectification are only needed for photos; scanned images enter at "
        "illumination flattening. Table {tab:tech} lists the image-processing techniques used.")
 c.figure(os.path.join(FIG, "fig_block_diagram.png"), 16, key="block", caption="Block diagram of Plan2Model.")
-c.table(["Technique", "Used for", "Course lesson", "Implementation"],
-        [["Canny edge detection", "page detection", "[TBD]", "OpenCV"],
-         ["Contours + Douglas–Peucker", "page quadrilateral, polygons", "[TBD]", "OpenCV"],
-         ["Homography (geometric transform)", "perspective rectification", "[TBD]", "OpenCV"],
-         ["Grey-level and binary morphology", "illumination, walls, door closing", "[TBD]", "OpenCV"],
-         ["Sauvola adaptive threshold", "binarisation", "[TBD]", "self-implemented"],
-         ["Otsu threshold", "baseline", "[TBD]", "OpenCV"],
-         ["Distance transform, connected components", "hollow-wall filling, rooms", "[TBD]", "OpenCV"],
-         ["Hough transform", "wall line segments", "[TBD]", "OpenCV"]],
-        [4.8, 4.6, 2.3, 3.0], "Image-processing techniques used and the corresponding course lessons.", key="tech")
+c.table(["Technique", "Used for", "Course topic", "Implementation"],
+        [["Canny edge detection", "page detection", "Edge detection", "OpenCV"],
+         ["Contours + Douglas–Peucker", "page quadrilateral, polygons", "Shape representation", "OpenCV"],
+         ["Homography (geometric transform)", "perspective rectification", "Geometric transformations", "OpenCV"],
+         ["Grey-level and binary morphology", "illumination, walls, door closing", "Morphological processing", "OpenCV"],
+         ["Sauvola adaptive threshold", "binarisation", "Segmentation by thresholding", "self-implemented"],
+         ["Otsu threshold", "baseline", "Segmentation by thresholding", "OpenCV"],
+         ["Distance transform, connected components", "hollow-wall filling, rooms", "Morphology and segmentation", "OpenCV"],
+         ["Hough transform", "wall line segments", "Line detection", "OpenCV"]],
+        [4.4, 4.2, 3.7, 2.8], "Image-processing techniques used and the corresponding course topics.", key="tech")
 c.figure(os.path.join(FIG, "fig_pipeline_steps.png"), 16, key="steps", caption=
          "Pipeline on a synthetic phone photo: (a) input, (b) page detection, (c) perspective rectification, "
          "(d) illumination flattening, (e) Sauvola binarisation, (f) wall mask, (g) door closing, (h) rooms.")
@@ -523,14 +525,14 @@ c.para("To position the classical pipeline against deep learning, we train a U-N
        "one-cycle schedule, CPU only). The checkpoint and the probability threshold are selected on the validation "
        "split. The predicted wall mask is passed to the same door-closing and room-segmentation stage, so the "
        "comparison isolates wall extraction.")
-c.para("The model is trained for 3,000 iterations (batch 8) in about 2.5 hours on CPU; the best validation wall IoU is 0.710 "
-       "at threshold 0.6. On the test split (Tables {tab:main} and {tab:boot}) the U-Net reaches wall IoU 0.774 and room F1 "
-       "0.565, i.e. +0.214 wall IoU and +0.111 room F1 over the final classical method, both significant at 95 %. "
-       "The gain comes mostly from recall on hatched, coloured and thin walls, which a learned model separates from furniture "
-       "and text much better than morphology. The price is 300 labelled training images, hours of training and a 57 MB model, "
-       "whereas the classical pipeline needs no training data, runs in about 0.5 s per image, and every stage can be "
-       "inspected and tuned by hand. Both share the same room-segmentation stage, so remaining room errors (open-plan "
-       "areas, unclosed doors) affect them equally.")
+c.para("The model is trained for 3,000 iterations (batch 8) in about 2.5 hours on CPU. The best validation wall IoU "
+       "at a threshold of 0.5 is 0.710; the threshold then selected on validation, 0.6, gives 0.712. On the test split "
+       "(Tables {tab:main} and {tab:boot}) the U-Net reaches wall IoU 0.774 and room F1 0.565, i.e. +0.214 wall IoU and "
+       "+0.111 room F1 over the final classical method, both significant at 95 %. Most of the wall gain is in recall "
+       "(0.915 vs 0.743), and precision is also higher (0.832 vs 0.692). The price is 300 labelled training images, "
+       "hours of training and a 57 MB model, whereas the classical pipeline needs no training data, runs in about 0.5 s "
+       "per image, and every stage can be inspected and tuned by hand. Both share the same room-segmentation stage, so "
+       "the limitations of that stage (open-plan areas, unclosed doors) apply to both.")
 c.heading("Demo Application", 1)
 c.para("The pipeline is packaged as a Streamlit application (Appendix B). The user picks a sample or uploads a photo, "
        "chooses the paper format and how the drawing scale is obtained (known house width, assumed wall thickness, or "
@@ -635,11 +637,12 @@ for line in [f"Repository: {REPO_URL}",
              "Dataset: https://github.com/nstung463/plan2model/releases/download/v1.0/plan2model_dataset.zip (CubiCasa5K subset + synthetic images; unzip into prototype/data/)"]:
     c.para(line, space_before=60, size=11)
 c.para("**Appendix C. Declaration of AI Tool Usage**", space_before=240)
-c.para("In accordance with the course regulations, the group declares the following use of AI tools. "
-       "[TBD – the group must review and confirm this declaration.]")
+c.para("In accordance with the course regulations, the group declares the following use of AI tools.")
 c.table(["Tool", "Purpose", "Scope"],
-        [["Claude (Anthropic), via Claude Code", "Code prototyping and debugging; suggesting experiment design; drafting report text",
-          "All generated code and text were reviewed, run and edited by the group; all numbers come from our own experiments"]],
+        [["Claude (Anthropic), via Claude Code", "Code prototyping and debugging; suggesting experiment design; drafting report text; editing, motion graphics and captions of the demo video (HyperFrames)",
+          "All generated code and text were reviewed, run and edited by the group; all numbers come from our own experiments"],
+         ["Whisper large-v3-turbo (OpenAI), via faster-whisper", "Speech-to-text of the narration, used for captions and cut points",
+          "Demo video only; the narration is spoken by a group member and the transcript was corrected before use"]],
         [3.8, 5.4, 5.6], "AI tool usage declaration.")
 
 # Thay token {fig:x}/{tab:x} bằng số thật

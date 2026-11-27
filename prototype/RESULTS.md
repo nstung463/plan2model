@@ -25,6 +25,8 @@
 
 ## Kiểm định (bootstrap theo cặp ảnh, 5000 lần, CI 95%)
 
+“Đề xuất” trong bảng này là bản k tự ước lượng. Báo cáo so sánh bằng bản cuối (k = 7): so với Otsu là +0.088 [+0.038, +0.142] Wall IoU và +0.138 [+0.064, +0.216] Room F1.
+
 | So sánh | Δ Wall IoU | Δ Room F1 |
 |---|---|---|
 | Đề xuất − Otsu | +0.080 [+0.030, +0.134] | +0.131 [+0.054, +0.210] |

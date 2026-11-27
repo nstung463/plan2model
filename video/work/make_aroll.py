@@ -15,6 +15,10 @@ for a, b in keep:
         if w["start"] >= a - 0.05 and w["end"] <= b + 0.05:
             out.append({**w, "start": round(w["start"] - a + acc, 3), "end": round(min(w["end"], b) - a + acc, 3)})
     acc += b - a
+# Whisper tự bịa câu kêu đăng ký kênh ở đoạn im lặng cuối -> bỏ (cả chữ "Hãy" đứng trước)
+i = next((i for i, w in enumerate(out) if w["text"] == "subscribe"), None)
+if i is not None:
+    out = out[:i - 1]
 json.dump({"duration": round(acc, 3), "words": out}, open(os.path.join(W, "words_edit.json"), "w", encoding="utf-8"),
           ensure_ascii=False, indent=0)
 print("edited duration", round(acc, 2), "s,", len(out), "words")

@@ -92,7 +92,7 @@ Tham số được tune trên tập val rồi giữ nguyên khi chạy test.
 
 - **Ablation:** bỏ khối lấp tường rỗng thì Room F1 giảm từ 0.447 xuống 0.229. Đây là khối đóng góp lớn nhất.
 - **Kiểm định bootstrap (5000 lần):**
-  - So với Otsu, phương pháp đề xuất hơn +0.080 Wall IoU, khoảng tin cậy 95 % là [+0.030, +0.134].
+  - So với Otsu, phương pháp đề xuất (k = 7) hơn +0.088 Wall IoU, khoảng tin cậy 95 % là [+0.038, +0.142].
   - U-Net hơn phương pháp đề xuất +0.214 Wall IoU. Đổi lại U-Net cần 300 ảnh có nhãn và 2,5 giờ train.
 
 **Ảnh dự đoán:** xanh lá là tường đúng, đỏ là tường thừa, xanh dương là tường bị sót. Ba ảnh là ca tốt nhất, ca trung vị và ca tệ nhất:
@@ -139,7 +139,7 @@ python prototype/run_demo.py   # ảnh mô phỏng → prototype/output/floorpla
 - Mỗi ảnh CubiCasa gồm `F1_scaled.png` (ảnh bản vẽ) và `model.svg` (nhãn tường và phòng).
 - Nguồn: CubiCasa5K (Kalervo và cộng sự, SCIA 2019), [zenodo.org/records/2613548](https://zenodo.org/records/2613548), giấy phép CC BY-NC 4.0.
 
-**Cách 2, tự tải lại từ nguồn gốc:** script tải từng phần (HTTP range, ~60 MB) theo split chính thức:
+**Cách 2, tự tải lại từ nguồn gốc:** script tải từng phần (HTTP range) theo split chính thức, khoảng 40 MB cho val + test và thêm khoảng 150 MB nếu tải train:
 
 ```bash
 python prototype/fetch_cubicasa.py val 45
@@ -181,5 +181,5 @@ video/                       kịch bản và mã dựng video demo (HyperFrames
 
 ## Khai báo sử dụng AI
 
-Nhóm dùng Claude (Anthropic) qua Claude Code để hỗ trợ viết và sửa mã, gợi ý thiết kế thí nghiệm, soạn báo cáo và dựng video.
+Nhóm dùng Claude (Anthropic) qua Claude Code để hỗ trợ viết và sửa mã, gợi ý thiết kế thí nghiệm, soạn báo cáo và dựng video. Lời thoại trong video được chép bằng Whisper (faster-whisper) để làm phụ đề.
 Chi tiết ở Phụ lục C của báo cáo.

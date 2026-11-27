@@ -27,3 +27,6 @@
 - **Không có nhạc nền**: MusicGen local không chạy được vì ổ C đầy (Windows không nới được paging file). Thêm sau: đặt file vào `assets/bgm.wav` rồi chạy lại `work/build.py` (tự gắn ở volume 0,10).
 - Lời nói "81 đỉnh, hơn 100.000 điểm ảnh tường" khác số pipeline hiện tại (74 đỉnh, 89.631 px) → trên màn hình không hiện hai số này.
 - Cảnh yếu nhất: phần kết quả lúc đầu khá trống phía trên trước khi cột mọc.
+
+## Bản 3
+- Gỡ câu kêu đăng ký kênh do Whisper tự bịa ở phụ đề cuối (522,8–523,0 s); chỉ render lại đoạn c08, 23 khung khác bản trước.

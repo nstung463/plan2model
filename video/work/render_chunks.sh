@@ -25,7 +25,7 @@ h = re.sub(r'<div id="s[0-9]+" data-composition-id="s[0-9]+"[^>]*>', fix, h)
 open("index_chunk.html", "w", encoding="utf-8").write(h)
 EOF
     echo "CHUNK $i $s-$e start $(date +%T)"
-    npx hyperframes render -c index_chunk.html -o "$f" --start $s --end $e --crf 18 --sdr --workers 3 > "/f/Project_Nhom_MSE/video/work/render_c$i.log" 2>&1
+    npx hyperframes render -c index_chunk.html -o "$f" --start $s --end $e --crf 18 --sdr --workers ${WORKERS:-3} > "/f/Project_Nhom_MSE/video/work/render_c$i.log" 2>&1
     rc=$?
     if [ $rc -ne 0 ] || [ ! -s "$f" ]; then echo "CHUNK $i FAILED rc=$rc"; exit 1; fi
     echo "CHUNK $i done $(date +%T) $(du -h "$f" | cut -f1) free=$(df -h /f | tail -1 | awk '{print $4}')"
