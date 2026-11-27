@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; background: #0f1115; font: 13px system-ui, "Segoe UI", sans-serif; color: #e8ebf1; }
+  #view { position: relative; height: __HEIGHT__px; }
+  .btns { position: absolute; right: 10px; top: 10px; display: flex; gap: 6px; }
+  .btns button { background: #222836; color: #e8ebf1; border: 1px solid #2a2f3a; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+  .btns button:hover { border-color: #4fb3ff; }
+  .hint { position: absolute; left: 12px; bottom: 10px; color: #9aa3b2; font-size: 12px; pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="view">
+  <div class="btns"><button id="b3d">3D</button><button id="btop">Nhìn từ trên</button><button id="bspin">Xoay</button></div>
+  <div class="hint">Kéo chuột để xoay · lăn để zoom · chuột phải để di chuyển</div>
+</div>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+const MODEL = __MODEL__;
+const el = document.getElementById("view");
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+el.prepend(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x0f1115);
+const cam = new THREE.PerspectiveCamera(45, 1, 0.1, 500);
+const ctl = new OrbitControls(cam, renderer.domElement); ctl.enableDamping = true;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x334455, 1.1));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(10, 18, 8); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -30, right: 30, top: 30, bottom: -30 });
+scene.add(sun);
+const H = 2.8;
+const toShape = pts => { const s = new THREE.Shape(); pts.forEach(([x, y], i) => i ? s.lineTo(x, y) : s.moveTo(x, y)); s.closePath(); return s; };
+const group = new THREE.Group();
+const wallMat = new THREE.MeshStandardMaterial({ color: 0xf2efe9, roughness: 0.85 });
+for (const w of MODEL.walls) {
+  const s = toShape(w.outer);
+  w.holes.forEach(h => s.holes.push(new THREE.Path(toShape(h).getPoints())));
+  const g = new THREE.ExtrudeGeometry(s, { depth: H, bevelEnabled: false }); g.rotateX(-Math.PI / 2);
+  const m = new THREE.Mesh(g, wallMat); m.castShadow = m.receiveShadow = true; group.add(m);
+}
+const cols = [0xffb366, 0x66ccff, 0x99e699, 0xcc99ff, 0x6699ff, 0xffe666, 0x66e6ff, 0xff9999];
+MODEL.rooms.forEach((r, i) => {
+  const g = new THREE.ShapeGeometry(toShape(r.poly)); g.rotateX(-Math.PI / 2);
+  const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: cols[i % cols.length], roughness: 0.9 }));
+  m.position.y = 0.01; m.receiveShadow = true; group.add(m);
+  const c = document.createElement("canvas"); c.width = 512; c.height = 160;
+  const x = c.getContext("2d");
+  x.fillStyle = "rgba(15,17,21,.82)"; x.beginPath(); x.roundRect(6, 6, 500, 148, 24); x.fill();
+  x.fillStyle = "#fff"; x.font = "bold 54px system-ui"; x.textAlign = "center"; x.fillText(r.name, 256, 72);
+  x.font = "44px system-ui"; x.fillStyle = "#9fd3ff"; x.fillText(r.area + " m²", 256, 128);
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), depthTest: false }));
+  sp.scale.set(2.4, 0.75, 1); sp.position.set(r.c[0], H + 0.9, -r.c[1]); group.add(sp);
+});
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.MeshStandardMaterial({ color: 0x1b1f27 }));
+ground.rotation.x = -Math.PI / 2; ground.position.y = -0.01; ground.receiveShadow = true; scene.add(ground);
+scene.add(group);
+const box = new THREE.Box3().setFromObject(group), ctr = box.getCenter(new THREE.Vector3()), size = box.getSize(new THREE.Vector3());
+group.position.sub(new THREE.Vector3(ctr.x, 0, ctr.z));
+const R = Math.max(size.x, size.z, 6);
+const views = { iso: [0.95 * R, 1.2 * R, 1.3 * R], top: [0, 1.9 * R, 0.01] };
+const setView = v => { group.rotation.y = 0; cam.position.set(...views[v]); ctl.target.set(0, 0, 0); ctl.update(); };
+setView("iso");
+let spin = true;
+document.getElementById("b3d").onclick = () => setView("iso");
+document.getElementById("btop").onclick = () => { spin = false; setView("top"); };
+document.getElementById("bspin").onclick = () => spin = !spin;
+ctl.addEventListener("start", () => spin = false);
+const resize = () => { const w = el.clientWidth, h = el.clientHeight; renderer.setSize(w, h); cam.aspect = w / h; cam.updateProjectionMatrix(); };
+addEventListener("resize", resize); resize();
+renderer.setAnimationLoop(() => { if (spin) group.rotation.y += 0.003; ctl.update(); renderer.render(scene, cam); });
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "otsu": {
+    "k": 5,
+    "door": 1.6
+  },
+  "v1": {
+    "k": 3,
+    "door": 2.0
+  },
+  "full": {
+    "r_max": 14,
+    "ratio": 0.25,
+    "kmin": 5,
+    "door": 1.6
+  },
+  "fixed_k": 7,
+  "_val_J": {
+    "otsu": 0.3867,
+    "v1": 0.3551,
+    "full": 0.4846,
+    "fixed_k": 0.4931
+  },
+  "_note": "Tune tren CubiCasa5K val (45 anh), J = 0.5*wall_IoU + 0.5*room_F1"
+}

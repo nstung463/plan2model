@@ -1,0 +1,79 @@
+{
+  "B0 Otsu + k co dinh": {
+    "wall_IoU": 0.473,
+    "wall_P": 0.727,
+    "wall_R": 0.556,
+    "room_mIoU": 0.07,
+    "room_F1": 0.056,
+    "ms": 80.855,
+    "wall_IoU[colorful]": 0.607,
+    "wall_IoU[high_quality]": 0.576,
+    "wall_IoU[high_quality_architectural]": 0.234
+  },
+  "B1 Sauvola + k co dinh (v1)": {
+    "wall_IoU": 0.376,
+    "wall_P": 0.695,
+    "wall_R": 0.406,
+    "room_mIoU": 0.013,
+    "room_F1": 0.013,
+    "ms": 441.991,
+    "wall_IoU[colorful]": 0.536,
+    "wall_IoU[high_quality]": 0.482,
+    "wall_IoU[high_quality_architectural]": 0.109
+  },
+  "De xuat (day du)": {
+    "wall_IoU": 0.557,
+    "wall_P": 0.684,
+    "wall_R": 0.748,
+    "room_mIoU": 0.39,
+    "room_F1": 0.454,
+    "ms": 604.96,
+    "wall_IoU[colorful]": 0.612,
+    "wall_IoU[high_quality]": 0.582,
+    "wall_IoU[high_quality_architectural]": 0.477
+  },
+  "  - bo lam phang sang": {
+    "wall_IoU": 0.564,
+    "wall_P": 0.684,
+    "wall_R": 0.758,
+    "room_mIoU": 0.39,
+    "room_F1": 0.459,
+    "ms": 541.187,
+    "wall_IoU[colorful]": 0.617,
+    "wall_IoU[high_quality]": 0.597,
+    "wall_IoU[high_quality_architectural]": 0.477
+  },
+  "  - bo lap tuong rong": {
+    "wall_IoU": 0.435,
+    "wall_P": 0.697,
+    "wall_R": 0.507,
+    "room_mIoU": 0.191,
+    "room_F1": 0.223,
+    "ms": 507.407,
+    "wall_IoU[colorful]": 0.554,
+    "wall_IoU[high_quality]": 0.546,
+    "wall_IoU[high_quality_architectural]": 0.206
+  },
+  "  - bo kenh mau": {
+    "wall_IoU": 0.547,
+    "wall_P": 0.681,
+    "wall_R": 0.727,
+    "room_mIoU": 0.376,
+    "room_F1": 0.437,
+    "ms": 558.06,
+    "wall_IoU[colorful]": 0.611,
+    "wall_IoU[high_quality]": 0.548,
+    "wall_IoU[high_quality_architectural]": 0.483
+  },
+  "  - k co dinh (khong uoc luong)": {
+    "wall_IoU": 0.56,
+    "wall_P": 0.692,
+    "wall_R": 0.743,
+    "room_mIoU": 0.356,
+    "room_F1": 0.407,
+    "ms": 534.614,
+    "wall_IoU[colorful]": 0.618,
+    "wall_IoU[high_quality]": 0.593,
+    "wall_IoU[high_quality_architectural]": 0.47
+  }
+}

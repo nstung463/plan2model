@@ -1,0 +1,986 @@
+{
+ "demo": [
+  {
+   "key": "input",
+   "title": "Ảnh đầu vào",
+   "stats": [
+    [
+     "Kích thước",
+     "1600 × 1200 px"
+    ],
+    [
+     "Loại ảnh",
+     "Ảnh chụp"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Ảnh gốc",
+     "file": "assets/steps/demo_input_0.jpg",
+     "w": 1400,
+     "h": 1050
+    }
+   ]
+  },
+  {
+   "key": "page",
+   "title": "Tìm tờ giấy trong ảnh",
+   "stats": [
+    [
+     "Số đỉnh",
+     "4"
+    ],
+    [
+     "Diện tích tờ giấy",
+     "54% ảnh"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Bản đồ cạnh (Canny)",
+     "file": "assets/steps/demo_page_0.jpg",
+     "w": 800,
+     "h": 600
+    },
+    {
+     "caption": "4 góc tìm được",
+     "file": "assets/steps/demo_page_1.jpg",
+     "w": 1400,
+     "h": 1050
+    }
+   ]
+  },
+  {
+   "key": "rectify",
+   "title": "Nắn thẳng tờ giấy (biến đổi phối cảnh)",
+   "stats": [
+    [
+     "Kích thước sau nắn",
+     "1400 × 956 px"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Lưới vuông nhìn trên ảnh nghiêng",
+     "file": "assets/steps/demo_rectify_0.jpg",
+     "w": 1400,
+     "h": 1050
+    },
+    {
+     "caption": "Sau khi nắn thẳng",
+     "file": "assets/steps/demo_rectify_1.jpg",
+     "w": 1400,
+     "h": 956
+    }
+   ]
+  },
+  {
+   "key": "light",
+   "title": "Làm đều ánh sáng",
+   "stats": [
+    [
+     "Độ sáng nền thấp nhất",
+     "117"
+    ],
+    [
+     "Độ sáng nền cao nhất",
+     "255"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Ảnh xám (đường vàng: hàng dùng để vẽ biểu đồ bên dưới)",
+     "file": "assets/steps/demo_light_0.jpg",
+     "w": 1400,
+     "h": 956
+    },
+    {
+     "caption": "Nền giấy ước lượng",
+     "file": "assets/steps/demo_light_1.jpg",
+     "w": 1400,
+     "h": 956
+    },
+    {
+     "caption": "Sau khi làm đều",
+     "file": "assets/steps/demo_light_2.jpg",
+     "w": 1400,
+     "h": 956
+    }
+   ]
+  },
+  {
+   "key": "binar",
+   "title": "Đổi sang đen trắng bằng ngưỡng Sauvola (tự cài đặt)",
+   "stats": [
+    [
+     "Ngưỡng Otsu",
+     "157"
+    ],
+    [
+     "Ngưỡng Sauvola",
+     "132 – 202"
+    ],
+    [
+     "Tỉ lệ điểm là mực",
+     "9.3%"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Otsu, một ngưỡng chung = 157",
+     "file": "assets/steps/demo_binar_0.jpg",
+     "w": 1400,
+     "h": 956
+    },
+    {
+     "caption": "Bản đồ ngưỡng Sauvola T(x,y)",
+     "file": "assets/steps/demo_binar_1.jpg",
+     "w": 1400,
+     "h": 956
+    },
+    {
+     "caption": "Kết quả Sauvola",
+     "file": "assets/steps/demo_binar_2.jpg",
+     "w": 1400,
+     "h": 956
+    }
+   ]
+  },
+  {
+   "key": "hollow",
+   "title": "Lấp tường rỗng",
+   "stats": [
+    [
+     "Số khe được lấp",
+     "6"
+    ],
+    [
+     "Điểm ảnh được thêm",
+     "10.007"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Trước khi lấp",
+     "file": "assets/steps/demo_hollow_0.jpg",
+     "w": 1400,
+     "h": 956
+    },
+    {
+     "caption": "Sau khi lấp (đỏ: phần được tô)",
+     "file": "assets/steps/demo_hollow_1.jpg",
+     "w": 1400,
+     "h": 956
+    },
+    {
+     "caption": "Phóng to vùng có nhiều thay đổi",
+     "file": "assets/steps/demo_hollow_2.jpg",
+     "w": 630,
+     "h": 630
+    }
+   ]
+  },
+  {
+   "key": "opening",
+   "title": "Giữ lại nét dày: phép mở (opening)",
+   "stats": [
+    [
+     "Kích thước ô k",
+     "7 px"
+    ],
+    [
+     "Mực bị xoá",
+     "34%"
+    ],
+    [
+     "Số mảnh tường",
+     "2"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Sau bước co (erosion 7×7)",
+     "file": "assets/steps/demo_opening_0.jpg",
+     "w": 1400,
+     "h": 956
+    },
+    {
+     "caption": "Sau bước giãn: đen là tường, hồng là nét bị xoá",
+     "file": "assets/steps/demo_opening_1.jpg",
+     "w": 1400,
+     "h": 956
+    },
+    {
+     "caption": "Phóng to",
+     "file": "assets/steps/demo_opening_2.jpg",
+     "w": 630,
+     "h": 630
+    }
+   ]
+  },
+  {
+   "key": "scale",
+   "title": "Đổi từ điểm ảnh sang mét",
+   "stats": [
+    [
+     "Tỉ lệ",
+     "84.5 px/m"
+    ],
+    [
+     "Độ dày tường đo được",
+     "15.3 px"
+    ],
+    [
+     "1 điểm ảnh",
+     "1.2 cm"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Bề rộng tường trên ảnh",
+     "file": "assets/steps/demo_scale_0.jpg",
+     "w": 1400,
+     "h": 956
+    },
+    {
+     "caption": "Khoảng cách tới mép tường",
+     "file": "assets/steps/demo_scale_1.jpg",
+     "w": 1400,
+     "h": 956
+    }
+   ]
+  },
+  {
+   "key": "doors",
+   "title": "Bịt các khe cửa",
+   "stats": [
+    [
+     "Độ dài khe tối đa",
+     "2.2 m ≈ 185 px"
+    ],
+    [
+     "Điểm ảnh được thêm",
+     "8.302"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Tường + đoạn bịt khe (xanh lá)",
+     "file": "assets/steps/demo_doors_0.jpg",
+     "w": 1400,
+     "h": 956
+    },
+    {
+     "caption": "Phóng to",
+     "file": "assets/steps/demo_doors_1.jpg",
+     "w": 630,
+     "h": 630
+    }
+   ]
+  },
+  {
+   "key": "rooms",
+   "title": "Tách từng phòng và tính diện tích",
+   "stats": [
+    [
+     "Số vùng trắng",
+     "6"
+    ],
+    [
+     "Ngoài nhà (bỏ)",
+     "1"
+    ],
+    [
+     "Quá nhỏ (bỏ)",
+     "0"
+    ],
+    [
+     "Số phòng",
+     "5"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Kết quả tách phòng",
+     "file": "assets/steps/demo_rooms_0.jpg",
+     "w": 1400,
+     "h": 956
+    }
+   ]
+  },
+  {
+   "key": "vector",
+   "title": "Chuyển từ điểm ảnh sang đường nét (vector hoá)",
+   "stats": [
+    [
+     "Điểm ảnh tường",
+     "89.631"
+    ],
+    [
+     "Số đỉnh đa giác",
+     "74"
+    ],
+    [
+     "Số đa giác tường",
+     "2"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Đa giác tường (xanh) và các đỉnh (đỏ)",
+     "file": "assets/steps/demo_vector_0.jpg",
+     "w": 1400,
+     "h": 956
+    }
+   ]
+  },
+  {
+   "key": "model",
+   "title": "Dựng mô hình 3D và xuất file CAD",
+   "stats": [
+    [
+     "Chiều cao tường",
+     "2,8 m"
+    ],
+    [
+     "Lớp DXF",
+     "WALL · ROOM · TEXT"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Kết quả cuối",
+     "file": "assets/steps/demo_model_0.jpg",
+     "w": 1400,
+     "h": 956
+    }
+   ]
+  }
+ ],
+ "demo_rooms": [
+  {
+   "area": 24.3
+  },
+  {
+   "area": 23.1
+  },
+  {
+   "area": 12.0
+  },
+  {
+   "area": 11.7
+  },
+  {
+   "area": 11.2
+  }
+ ],
+ "demo_time_s": null,
+ "cc": [
+  {
+   "key": "input",
+   "title": "Ảnh đầu vào",
+   "stats": [
+    [
+     "Kích thước",
+     "1041 × 1014 px"
+    ],
+    [
+     "Loại ảnh",
+     "Ảnh scan"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Ảnh gốc",
+     "file": "assets/steps/cc_input_0.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "light",
+   "title": "Làm đều ánh sáng",
+   "stats": [
+    [
+     "Độ sáng nền thấp nhất",
+     "245"
+    ],
+    [
+     "Độ sáng nền cao nhất",
+     "255"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Ảnh xám (đường vàng: hàng dùng để vẽ biểu đồ bên dưới)",
+     "file": "assets/steps/cc_light_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Nền giấy ước lượng",
+     "file": "assets/steps/cc_light_1.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Sau khi làm đều",
+     "file": "assets/steps/cc_light_2.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "binar",
+   "title": "Đổi sang đen trắng bằng ngưỡng Sauvola (tự cài đặt)",
+   "stats": [
+    [
+     "Ngưỡng Otsu",
+     "142"
+    ],
+    [
+     "Ngưỡng Sauvola",
+     "158 – 205"
+    ],
+    [
+     "Tỉ lệ điểm là mực",
+     "10.1%"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Otsu, một ngưỡng chung = 142",
+     "file": "assets/steps/cc_binar_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Bản đồ ngưỡng Sauvola T(x,y)",
+     "file": "assets/steps/cc_binar_1.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Kết quả Sauvola",
+     "file": "assets/steps/cc_binar_2.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "hollow",
+   "title": "Lấp tường rỗng",
+   "stats": [
+    [
+     "Số khe được lấp",
+     "115"
+    ],
+    [
+     "Điểm ảnh được thêm",
+     "69.812"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Trước khi lấp",
+     "file": "assets/steps/cc_hollow_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Sau khi lấp (đỏ: phần được tô)",
+     "file": "assets/steps/cc_hollow_1.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Phóng to vùng có nhiều thay đổi",
+     "file": "assets/steps/cc_hollow_2.jpg",
+     "w": 668,
+     "h": 668
+    }
+   ]
+  },
+  {
+   "key": "opening",
+   "title": "Giữ lại nét dày: phép mở (opening)",
+   "stats": [
+    [
+     "Kích thước ô k",
+     "7 px"
+    ],
+    [
+     "Mực bị xoá",
+     "24%"
+    ],
+    [
+     "Số mảnh tường",
+     "8"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Sau bước co (erosion 7×7)",
+     "file": "assets/steps/cc_opening_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Sau bước giãn: đen là tường, hồng là nét bị xoá",
+     "file": "assets/steps/cc_opening_1.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Phóng to",
+     "file": "assets/steps/cc_opening_2.jpg",
+     "w": 668,
+     "h": 668
+    }
+   ]
+  },
+  {
+   "key": "scale",
+   "title": "Đổi từ điểm ảnh sang mét",
+   "stats": [
+    [
+     "Tỉ lệ",
+     "112.0 px/m"
+    ],
+    [
+     "Độ dày tường đo được",
+     "19.1 px"
+    ],
+    [
+     "1 điểm ảnh",
+     "0.9 cm"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Bề rộng tường trên ảnh",
+     "file": "assets/steps/cc_scale_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Khoảng cách tới mép tường",
+     "file": "assets/steps/cc_scale_1.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "doors",
+   "title": "Bịt các khe cửa",
+   "stats": [
+    [
+     "Độ dài khe tối đa",
+     "1.6 m ≈ 179 px"
+    ],
+    [
+     "Điểm ảnh được thêm",
+     "200.689"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Tường + đoạn bịt khe (xanh lá)",
+     "file": "assets/steps/cc_doors_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Phóng to",
+     "file": "assets/steps/cc_doors_1.jpg",
+     "w": 668,
+     "h": 668
+    }
+   ]
+  },
+  {
+   "key": "rooms",
+   "title": "Tách từng phòng và tính diện tích",
+   "stats": [
+    [
+     "Số vùng trắng",
+     "25"
+    ],
+    [
+     "Ngoài nhà (bỏ)",
+     "8"
+    ],
+    [
+     "Quá nhỏ (bỏ)",
+     "12"
+    ],
+    [
+     "Số phòng",
+     "5"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Kết quả tách phòng",
+     "file": "assets/steps/cc_rooms_0.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "vector",
+   "title": "Chuyển từ điểm ảnh sang đường nét (vector hoá)",
+   "stats": [
+    [
+     "Điểm ảnh tường",
+     "146.695"
+    ],
+    [
+     "Số đỉnh đa giác",
+     "775"
+    ],
+    [
+     "Số đa giác tường",
+     "8"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Đa giác tường (xanh) và các đỉnh (đỏ)",
+     "file": "assets/steps/cc_vector_0.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "model",
+   "title": "Dựng mô hình 3D và xuất file CAD",
+   "stats": [
+    [
+     "Chiều cao tường",
+     "2,8 m"
+    ],
+    [
+     "Lớp DXF",
+     "WALL · ROOM · TEXT"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Kết quả cuối",
+     "file": "assets/steps/cc_model_0.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  }
+ ],
+ "cc_rooms": 5,
+ "ccoff": [
+  {
+   "key": "input",
+   "title": "Ảnh đầu vào",
+   "stats": [
+    [
+     "Kích thước",
+     "1041 × 1014 px"
+    ],
+    [
+     "Loại ảnh",
+     "Ảnh scan"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Ảnh gốc",
+     "file": "assets/steps/ccoff_input_0.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "light",
+   "title": "Làm đều ánh sáng",
+   "stats": [
+    [
+     "Độ sáng nền thấp nhất",
+     "245"
+    ],
+    [
+     "Độ sáng nền cao nhất",
+     "255"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Ảnh xám (đường vàng: hàng dùng để vẽ biểu đồ bên dưới)",
+     "file": "assets/steps/ccoff_light_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Nền giấy ước lượng",
+     "file": "assets/steps/ccoff_light_1.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Sau khi làm đều",
+     "file": "assets/steps/ccoff_light_2.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "binar",
+   "title": "Đổi sang đen trắng bằng ngưỡng Sauvola (tự cài đặt)",
+   "stats": [
+    [
+     "Ngưỡng Otsu",
+     "142"
+    ],
+    [
+     "Ngưỡng Sauvola",
+     "158 – 205"
+    ],
+    [
+     "Tỉ lệ điểm là mực",
+     "10.1%"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Otsu, một ngưỡng chung = 142",
+     "file": "assets/steps/ccoff_binar_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Bản đồ ngưỡng Sauvola T(x,y)",
+     "file": "assets/steps/ccoff_binar_1.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Kết quả Sauvola",
+     "file": "assets/steps/ccoff_binar_2.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "hollow",
+   "title": "Lấp tường rỗng (đang TẮT)",
+   "stats": [
+    [
+     "Số khe được lấp",
+     "0"
+    ],
+    [
+     "Điểm ảnh được thêm",
+     "0"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Trước khi lấp",
+     "file": "assets/steps/ccoff_hollow_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Sau khi lấp (đỏ: phần được tô)",
+     "file": "assets/steps/ccoff_hollow_1.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "opening",
+   "title": "Giữ lại nét dày: phép mở (opening)",
+   "stats": [
+    [
+     "Kích thước ô k",
+     "7 px"
+    ],
+    [
+     "Mực bị xoá",
+     "76%"
+    ],
+    [
+     "Số mảnh tường",
+     "25"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Sau bước co (erosion 7×7)",
+     "file": "assets/steps/ccoff_opening_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Sau bước giãn: đen là tường, hồng là nét bị xoá",
+     "file": "assets/steps/ccoff_opening_1.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Phóng to",
+     "file": "assets/steps/ccoff_opening_2.jpg",
+     "w": 668,
+     "h": 668
+    }
+   ]
+  },
+  {
+   "key": "scale",
+   "title": "Đổi từ điểm ảnh sang mét",
+   "stats": [
+    [
+     "Tỉ lệ",
+     "112.0 px/m"
+    ],
+    [
+     "Độ dày tường đo được",
+     "8.0 px"
+    ],
+    [
+     "1 điểm ảnh",
+     "0.9 cm"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Bề rộng tường trên ảnh",
+     "file": "assets/steps/ccoff_scale_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Khoảng cách tới mép tường",
+     "file": "assets/steps/ccoff_scale_1.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "doors",
+   "title": "Bịt các khe cửa",
+   "stats": [
+    [
+     "Độ dài khe tối đa",
+     "1.6 m ≈ 179 px"
+    ],
+    [
+     "Điểm ảnh được thêm",
+     "80.913"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Tường + đoạn bịt khe (xanh lá)",
+     "file": "assets/steps/ccoff_doors_0.jpg",
+     "w": 1041,
+     "h": 1014
+    },
+    {
+     "caption": "Phóng to",
+     "file": "assets/steps/ccoff_doors_1.jpg",
+     "w": 668,
+     "h": 668
+    }
+   ]
+  },
+  {
+   "key": "rooms",
+   "title": "Tách từng phòng và tính diện tích",
+   "stats": [
+    [
+     "Số vùng trắng",
+     "17"
+    ],
+    [
+     "Ngoài nhà (bỏ)",
+     "10"
+    ],
+    [
+     "Quá nhỏ (bỏ)",
+     "7"
+    ],
+    [
+     "Số phòng",
+     "0"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Kết quả tách phòng",
+     "file": "assets/steps/ccoff_rooms_0.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "vector",
+   "title": "Chuyển từ điểm ảnh sang đường nét (vector hoá)",
+   "stats": [
+    [
+     "Điểm ảnh tường",
+     "28.741"
+    ],
+    [
+     "Số đỉnh đa giác",
+     "386"
+    ],
+    [
+     "Số đa giác tường",
+     "25"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Đa giác tường (xanh) và các đỉnh (đỏ)",
+     "file": "assets/steps/ccoff_vector_0.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  },
+  {
+   "key": "model",
+   "title": "Dựng mô hình 3D và xuất file CAD",
+   "stats": [
+    [
+     "Chiều cao tường",
+     "2,8 m"
+    ],
+    [
+     "Lớp DXF",
+     "WALL · ROOM · TEXT"
+    ]
+   ],
+   "images": [
+    {
+     "caption": "Kết quả cuối",
+     "file": "assets/steps/ccoff_model_0.jpg",
+     "w": 1041,
+     "h": 1014
+    }
+   ]
+  }
+ ],
+ "ccoff_rooms": 0
+}

@@ -1,0 +1,84 @@
+{
+  "B0 Otsu (k tune tren val)": {
+    "wall_IoU": 0.473,
+    "wall_P": 0.727,
+    "wall_R": 0.556,
+    "room_mIoU": 0.258,
+    "room_F1": 0.316,
+    "ms": 85.598,
+    "wall_IoU[colorful]": 0.607,
+    "wall_IoU[high_quality]": 0.576,
+    "wall_IoU[high_quality_architectural]": 0.234
+  },
+  "B1 Sauvola v1 (k tune tren val)": {
+    "wall_IoU": 0.421,
+    "wall_P": 0.649,
+    "wall_R": 0.525,
+    "room_mIoU": 0.345,
+    "room_F1": 0.304,
+    "ms": 460.98,
+    "wall_IoU[colorful]": 0.529,
+    "wall_IoU[high_quality]": 0.482,
+    "wall_IoU[high_quality_architectural]": 0.254
+  },
+  "De xuat (day du)": {
+    "wall_IoU": 0.552,
+    "wall_P": 0.672,
+    "wall_R": 0.756,
+    "room_mIoU": 0.387,
+    "room_F1": 0.447,
+    "ms": 510.427,
+    "wall_IoU[colorful]": 0.605,
+    "wall_IoU[high_quality]": 0.581,
+    "wall_IoU[high_quality_architectural]": 0.471
+  },
+  "  - bo lam phang sang": {
+    "wall_IoU": 0.557,
+    "wall_P": 0.672,
+    "wall_R": 0.766,
+    "room_mIoU": 0.388,
+    "room_F1": 0.447,
+    "ms": 463.135,
+    "wall_IoU[colorful]": 0.608,
+    "wall_IoU[high_quality]": 0.593,
+    "wall_IoU[high_quality_architectural]": 0.471
+  },
+  "  - bo lap tuong rong": {
+    "wall_IoU": 0.435,
+    "wall_P": 0.69,
+    "wall_R": 0.51,
+    "room_mIoU": 0.204,
+    "room_F1": 0.229,
+    "ms": 416.099,
+    "wall_IoU[colorful]": 0.553,
+    "wall_IoU[high_quality]": 0.545,
+    "wall_IoU[high_quality_architectural]": 0.206
+  },
+  "  - bo kenh mau": {
+    "wall_IoU": 0.544,
+    "wall_P": 0.671,
+    "wall_R": 0.737,
+    "room_mIoU": 0.379,
+    "room_F1": 0.426,
+    "ms": 476.338,
+    "wall_IoU[colorful]": 0.605,
+    "wall_IoU[high_quality]": 0.551,
+    "wall_IoU[high_quality_architectural]": 0.478
+  },
+  "  - k co dinh (tune tren val)": {
+    "wall_IoU": 0.56,
+    "wall_P": 0.692,
+    "wall_R": 0.743,
+    "room_mIoU": 0.344,
+    "room_F1": 0.454,
+    "ms": 76.625,
+    "wall_IoU[colorful]": 0.618,
+    "wall_IoU[high_quality]": 0.593,
+    "wall_IoU[high_quality_architectural]": 0.47
+  },
+  "_meta": {
+    "split": "test",
+    "n_images": 60,
+    "params_from": "params.json (tune tren val)"
+  }
+}

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan2Model Demo</title>
+<style>
+  :root { --bg:#0f1115; --panel:#171a21; --line:#2a2f3a; --fg:#e8ebf1; --mute:#9aa3b2; --acc:#4fb3ff; --ok:#5fd38a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 system-ui, "Segoe UI", sans-serif; }
+  header { padding:24px 24px 8px; }
+  h1 { margin:0; font-size:26px; }
+  header p { margin:6px 0 0; color:var(--mute); }
+  .wrap { display:grid; grid-template-columns: minmax(0,1.35fr) minmax(0,1fr); gap:16px; padding:16px 24px 32px; }
+  @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; padding:12px 16px; } }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .card h2 { font-size:15px; margin:0; padding:12px 14px; border-bottom:1px solid var(--line); }
+  #view { height:560px; position:relative; }
+  #view canvas { display:block; }
+  .hint { position:absolute; left:12px; bottom:10px; color:var(--mute); font-size:12px; pointer-events:none; }
+  .btns { position:absolute; right:10px; top:10px; display:flex; gap:6px; }
+  .btns button { background:#222836; color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:6px 10px; cursor:pointer; font-size:13px; }
+  .btns button:hover { border-color:var(--acc); }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; }
+  td, th { padding:7px 12px; border-bottom:1px solid var(--line); text-align:left; }
+  th { color:var(--mute); font-weight:500; }
+  td.num { text-align:right; font-variant-numeric: tabular-nums; }
+  .good { color:var(--ok); }
+  .steps { display:grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap:12px; padding:0 24px 40px; }
+  @media (max-width: 900px) { .steps { padding:0 16px 32px; } }
+  .step img { width:100%; display:block; background:#fff; }
+  .step .cap { padding:8px 12px; }
+  .step .cap b { display:block; font-size:14px; }
+  .step .cap span { color:var(--mute); font-size:12.5px; }
+  .sec { padding:4px 24px 0; font-size:18px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Plan2Model: Ảnh chụp bản vẽ → CAD → 3D</h1>
+  <p>Prototype đề tài Xử lý Ảnh &amp; Video số. Toàn bộ chạy bằng xử lý ảnh cổ điển (OpenCV), không dùng deep learning.</p>
+</header>
+<div class="wrap">
+  <div class="card">
+    <h2>Mô hình 3D dựng từ ảnh chụp</h2>
+    <div id="view">
+      <div class="btns"><button id="b3d">3D</button><button id="btop">Nhìn từ trên</button><button id="bspin">Xoay</button></div>
+      <div class="hint">Kéo chuột để xoay · lăn để zoom · chuột phải để di chuyển</div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div class="card"><h2>Đánh giá định lượng (so với ground truth)</h2><table id="met"></table></div>
+    <div class="card"><h2>Từng phòng: diện tích &amp; IoU</h2><table id="rooms"></table></div>
+    <div class="card"><h2>Thời gian từng khối (ms)</h2><table id="tim"></table></div>
+  </div>
+</div>
+<div class="sec">Pipeline từng bước</div>
+<div class="steps" id="steps" style="margin-top:12px"></div>
+
+<script>
+const MODEL = __MODEL__, STEPS = __STEPS__, METRICS = __METRICS__, ROOMS = __ROOMS__, TIMING = __TIMING__;
+const fmt = v => typeof v === "number" ? (Math.abs(v) <= 1 ? (v*100).toFixed(1) + "%" : v.toString()) : v;
+document.getElementById("met").innerHTML = Object.entries(METRICS).map(([k,v]) => `<tr><td>${k}</td><td class="num">${fmt(v)}</td></tr>`).join("");
+document.getElementById("rooms").innerHTML = "<tr><th>Phòng</th><th>Thật (m²)</th><th>Đo (m²)</th><th>IoU</th></tr>" +
+  ROOMS.map(r => `<tr><td>${r.name}</td><td class="num">${r.gt_area.toFixed(2)}</td><td class="num">${r.pred_area ?? "-"}</td><td class="num ${r.IoU>0.9?'good':''}">${(r.IoU*100).toFixed(1)}%</td></tr>`).join("");
+document.getElementById("tim").innerHTML = Object.entries(TIMING).map(([k,v]) => `<tr><td>${k}</td><td class="num">${v}</td></tr>`).join("");
+document.getElementById("steps").innerHTML = STEPS.map(s => `<div class="card step"><img src="${s.src}" alt="${s.t}"><div class="cap"><b>${s.t}</b><span>${s.d}</span></div></div>`).join("");
+</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+const el = document.getElementById("view");
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+el.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0f1115);
+const cam = new THREE.PerspectiveCamera(45, 1, 0.1, 200);
+const ctl = new OrbitControls(cam, renderer.domElement);
+ctl.enableDamping = true;
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0x334455, 1.1));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6);
+sun.position.set(8, 14, 6); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left:-12, right:12, top:12, bottom:-12 });
+scene.add(sun);
+
+const H = 2.8;
+const toShape = pts => { const s = new THREE.Shape(); pts.forEach(([x,y],i) => i ? s.lineTo(x,y) : s.moveTo(x,y)); s.closePath(); return s; };
+const group = new THREE.Group();
+const wallMat = new THREE.MeshStandardMaterial({ color: 0xf2efe9, roughness: 0.85 });
+for (const w of MODEL.walls) {
+  const s = toShape(w.outer);
+  w.holes.forEach(h => s.holes.push(new THREE.Path(toShape(h).getPoints())));
+  const g = new THREE.ExtrudeGeometry(s, { depth: H, bevelEnabled: false });
+  g.rotateX(-Math.PI / 2);
+  const m = new THREE.Mesh(g, wallMat); m.castShadow = m.receiveShadow = true;
+  group.add(m);
+}
+const cols = [0xffb366, 0x66ccff, 0x99e699, 0xcc99ff, 0x6699ff, 0xffe666];
+MODEL.rooms.forEach((r, i) => {
+  const g = new THREE.ShapeGeometry(toShape(r.poly)); g.rotateX(-Math.PI / 2);
+  const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: cols[i % cols.length], roughness: 0.9 }));
+  m.position.y = 0.01; m.receiveShadow = true; group.add(m);
+  const c = document.createElement("canvas"); c.width = 512; c.height = 160;
+  const x = c.getContext("2d");
+  x.fillStyle = "rgba(15,17,21,.82)"; x.beginPath(); x.roundRect(6, 6, 500, 148, 24); x.fill();
+  x.fillStyle = "#fff"; x.font = "bold 54px system-ui"; x.textAlign = "center"; x.fillText(r.name, 256, 72);
+  x.font = "44px system-ui"; x.fillStyle = "#9fd3ff"; x.fillText(r.area + " m²", 256, 128);
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), depthTest: false }));
+  sp.scale.set(2.4, 0.75, 1); sp.position.set(r.c[0], H + 0.9, -r.c[1]); group.add(sp);
+});
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.MeshStandardMaterial({ color: 0x1b1f27 }));
+ground.rotation.x = -Math.PI / 2; ground.position.y = -0.01; ground.receiveShadow = true; scene.add(ground);
+scene.add(group);
+
+const box = new THREE.Box3().setFromObject(group), ctr = box.getCenter(new THREE.Vector3());
+group.position.sub(new THREE.Vector3(ctr.x, 0, ctr.z));
+const views = { iso: [11, 14, 16], top: [0, 22, 0.01] };
+const setView = v => { group.rotation.y = 0; cam.position.set(...views[v]); ctl.target.set(0, 0, 0); ctl.update(); };
+setView("iso");
+let spin = true;
+document.getElementById("b3d").onclick = () => setView("iso");
+document.getElementById("btop").onclick = () => { spin = false; setView("top"); };
+document.getElementById("bspin").onclick = () => spin = !spin;
+ctl.addEventListener("start", () => spin = false);
+
+const resize = () => { const w = el.clientWidth, h = el.clientHeight; renderer.setSize(w, h); cam.aspect = w / h; cam.updateProjectionMatrix(); };
+addEventListener("resize", resize); resize();
+renderer.setAnimationLoop(() => { if (spin) group.rotation.y += 0.003; ctl.update(); renderer.render(scene, cam); });
+</script>
+</body>
+</html>

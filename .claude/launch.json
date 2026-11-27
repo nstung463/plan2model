@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "demo",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8765", "--directory", "F:/Project_Nhom_MSE/prototype/output"],
+      "port": 8765
+    },
+    {
+      "name": "app",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "streamlit", "run", "F:/Project_Nhom_MSE/app.py", "--server.headless=true", "--server.port=8501"],
+      "port": 8501
+    }
+  ]
+}

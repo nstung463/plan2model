@@ -1,0 +1,62 @@
+{
+  "ok": true,
+  "outputDir": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5",
+  "frames": [
+    {
+      "path": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\frame-00-at-95s.png",
+      "time": 95
+    },
+    {
+      "path": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\frame-01-at-357s.png",
+      "time": 357
+    },
+    {
+      "path": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\frame-02-at-363s.png",
+      "time": 363
+    },
+    {
+      "path": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\frame-03-at-366s.png",
+      "time": 366
+    },
+    {
+      "path": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\frame-04-at-460s.png",
+      "time": 460
+    },
+    {
+      "path": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\frame-05-at-467s.png",
+      "time": 467
+    },
+    {
+      "path": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\frame-06-at-473s.png",
+      "time": 473
+    },
+    {
+      "path": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\frame-07-at-478s.png",
+      "time": 478
+    },
+    {
+      "path": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\frame-08-at-482.5s.png",
+      "time": 482.5
+    },
+    {
+      "path": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\frame-09-at-485s.png",
+      "time": 485
+    },
+    {
+      "path": "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\frame-10-at-527.34s.png",
+      "time": 527.34
+    }
+  ],
+  "contactSheets": [
+    "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\contact-sheet-1.jpg",
+    "F:\\Project_Nhom_MSE\\video\\hf\\.hyperframes\\artifacts\\snapshots\\44d4dd28-1322-4753-b2a4-0cc3182d56c5\\contact-sheet-2.jpg"
+  ],
+  "_meta": {
+    "version": "0.9.102",
+    "latestVersion": "0.9.102",
+    "updateAvailable": false,
+    "checkedAt": "2026-11-27T11:33:29.838Z",
+    "skillsOutdated": 6,
+    "skillsMissing": 0
+  }
+}

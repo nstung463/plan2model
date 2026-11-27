@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Dữ liệu lớn: tải lại bằng prototype/fetch_cubicasa.py
+prototype/data/cubicasa/
+prototype/data/cache_unet/
+
+# Trọng số U-Net: tải từ GitHub Release (xem README)
+prototype/models/*.pt
+
+# Video: chỉ giữ mã dựng video, không đưa file quay gốc / file render / trung gian
+video/raw/
+video/out/
+video/work/rec/
+video/work/*.wav
+video/work/*.jpg
+video/work/*.log
+video/work/*.err
+video/work/*.partial
+video/hf/assets/face.mp4
+video/hf/assets/voice.wav
+video/hf/assets/app/
+video/hf/index_chunk.html
+video/hf/node_modules/
+video/hf/snapshots/
+video/hf/renders/
+
+# Tài liệu đề bài của giảng viên
+Hướng dẫn Dự án nhóm.pdf
+
+# Máy cá nhân
+.claude/settings.local.json
+.DS_Store
+Thumbs.db
+~$*
+video/hf/.transcode-cache/
+video/hf/.hyperframes/
