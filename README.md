@@ -26,8 +26,8 @@ Dự án nhóm môn **Xử lý Ảnh và Video số**, MSE – FPT University.
 |---|---|---|
 | Nguyễn Thu Trang | | |
 | Nguyễn Văn Thụ | | |
-| Nguyễn Sơn Tùng | | |
-| Nguyễn Hoàng Khôi Minh | | |
+| Nguyễn Sơn Tùng | 26ms23347 | |
+| Nguyễn Hoàng Khôi Minh | 26ms23356 | |
 
 ## Phương pháp
 

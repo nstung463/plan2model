@@ -18,7 +18,7 @@ FIG = os.path.join(HERE, "figures")
 
 TITLE = "Plan2Model: From Phone Photos of Paper Floor Plans to CAD Drawings and 3D Models with Classical Image Processing"
 MEMBERS = ["Nguyễn Thu Trang – [TBD] Student ID", "Nguyễn Văn Thụ – [TBD] Student ID",
-           "Nguyễn Sơn Tùng – [TBD] Student ID", "Nguyễn Hoàng Khôi Minh – [TBD] Student ID"]
+           "Nguyễn Sơn Tùng – 26ms23347", "Nguyễn Hoàng Khôi Minh – 26ms23356"]
 REPO_URL = "https://github.com/nstung463/plan2model"
 VIDEO_URL = "https://github.com/nstung463/plan2model/releases/tag/v1.0"
 YEAR = "2026"
@@ -251,7 +251,8 @@ for base in (9, 25):
         p = P[base + i]
         if i < len(MEMBERS):
             set_par_text(p, MEMBERS[i])
-            for r in p.runs: r.font.highlight_color = WD_COLOR_INDEX.YELLOW
+            if "[TBD" in MEMBERS[i]:
+                for r in p.runs: r.font.highlight_color = WD_COLOR_INDEX.YELLOW
         else:
             set_par_text(p, "")
 for idx in (17, 36):
