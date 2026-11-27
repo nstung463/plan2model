@@ -156,7 +156,7 @@ python prototype/fetch_cubicasa.py train 300   # chỉ cần để train U-Net
 | U-Net (CPU) | `python prototype/unet_wall.py train 3000`, rồi `python prototype/eval_unet.py` |
 | Hình cho báo cáo | `python prototype/make_figures.py` |
 | Dựng báo cáo Word | `python report/build_report.py` |
-| Xuất PDF (điền mục lục) | `"C:Program Filesibreofficeprogrampython.exe" report/export_pdf.py` |
+| Xuất PDF (điền mục lục) | `"C:\Program Files\LibreOffice\program\python.exe" report/export_pdf.py` |
 
 ## Cấu trúc
 
