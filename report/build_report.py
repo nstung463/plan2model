@@ -617,10 +617,10 @@ set_par_text(app_title, "Appendices")
 c = Cursor(app_title._p)
 c.para("**Appendix A. Task Allocation**", space_before=240)
 c.table(["Member", "Main responsibilities", "Contribution (%)"],
-        [["Nguyễn Sơn Tùng (lead)", "Project coordination and system design; integration of the pipeline (core.py); Streamlit demo application; demo video; report writing and final editing", "28"],
-         ["Nguyễn Thu Trang", "Page detection and perspective rectification; illumination flattening; self-implemented Sauvola threshold and its verification; synthetic plan and phone-photo generator", "24"],
-         ["Nguyễn Văn Thụ", "Wall candidate extraction (colour cue, hollow-wall filling); door closing and room segmentation; vectorisation, DXF/JSON export and 3D model", "24"],
-         ["Nguyễn Hoàng Khôi Minh", "CubiCasa5K download and ground-truth parsing; grid-search tuning and test protocol; ablation and bootstrap analysis; U-Net training and comparison", "24"]],
+        [["Nguyễn Sơn Tùng (lead)", "Project coordination and system design; integration of the pipeline (core.py); Streamlit demo application; demo video; report writing and final editing", "25"],
+         ["Nguyễn Thu Trang", "Page detection and perspective rectification; illumination flattening; self-implemented Sauvola threshold and its verification; synthetic plan and phone-photo generator", "25"],
+         ["Nguyễn Văn Thụ", "Wall candidate extraction (colour cue, hollow-wall filling); door closing and room segmentation; vectorisation, DXF/JSON export and 3D model", "25"],
+         ["Nguyễn Hoàng Khôi Minh", "CubiCasa5K download and ground-truth parsing; grid-search tuning and test protocol; ablation and bootstrap analysis; U-Net training and comparison", "25"]],
         [3.8, 8.6, 2.4], "Task allocation and contribution.")
 c.para("**Appendix B. How to Run**", space_before=240)
 for line in [f"Repository: {REPO_URL}",
