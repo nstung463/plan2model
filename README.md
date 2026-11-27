@@ -1,7 +1,17 @@
 # Plan2Model
 
-Ảnh chụp bản vẽ mặt bằng giấy → bản vẽ CAD (DXF) → mô hình 3D, bằng xử lý ảnh cổ điển (OpenCV).
+**Ảnh chụp bản vẽ mặt bằng giấy → bản vẽ CAD (DXF) → mô hình 3D, bằng xử lý ảnh cổ điển (OpenCV).**
 Dự án nhóm môn **Xử lý Ảnh và Video số**, MSE – FPT University.
+
+<p align="center">
+  <img src="report/figures/fig_pipeline_steps.png" alt="Các bước xử lý từ ảnh chụp điện thoại đến tách phòng" width="100%">
+</p>
+<p align="center"><em>Từ ảnh chụp điện thoại (a) qua tìm tờ giấy, nắn phối cảnh, làm phẳng sáng, nhị phân hoá Sauvola, lấy tường, đóng cửa, đến tách phòng (h).</em></p>
+
+<p align="center">
+  <img src="report/figures/fig_3d_model.png" alt="Mô hình 3D dựng từ bản vẽ" width="62%">
+</p>
+<p align="center"><em>Mô hình 3D dựng tự động từ bản vẽ trên, kèm tên phòng và diện tích.</em></p>
 
 | | |
 |---|---|
@@ -19,6 +29,77 @@ Dự án nhóm môn **Xử lý Ảnh và Video số**, MSE – FPT University.
 | Nguyễn Sơn Tùng | | |
 | Nguyễn Hoàng Khôi Minh | | |
 
+## Phương pháp
+
+<p align="center">
+  <img src="report/figures/fig_block_diagram.png" alt="Sơ đồ khối" width="100%">
+</p>
+
+- **Tự cài đặt (ô cam):** ngưỡng Sauvola dùng ảnh tích phân (`prototype/pipeline.py`). Kết quả khớp `skimage.filters.threshold_sauvola` ở 99,99 % điểm ảnh.
+- **Đề xuất của nhóm (ô xanh):** dùng thêm màu sắc và **lấp tường rỗng**, để xử lý cả 3 kiểu vẽ tường: tô đặc, vẽ viền, gạch chéo/tô màu.
+- **Các kỹ thuật chuẩn:** Canny, contour + Douglas–Peucker, homography, hình thái học, biến đổi khoảng cách, thành phần liên thông, Hough.
+
+**Vì sao cần lấp tường rỗng:** tường vẽ bằng hai nét viền sẽ bị phép mở (opening) xoá sạch (c). Khi lấp lòng tường trước (d), phép mở giữ lại được tường (e).
+
+<p align="center">
+  <img src="report/figures/fig_hollow_fill.png" alt="Lấp tường rỗng" width="100%">
+</p>
+
+## Demo: ứng dụng Streamlit
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/images/app_steps.jpg" alt="Xem từng bước xử lý"></td>
+    <td width="50%"><img src="docs/images/app_3d.jpg" alt="Mô hình 3D trong app"></td>
+  </tr>
+  <tr>
+    <td><em>Tab “Quá trình xử lý”: số phòng, diện tích, thời gian; bấm từng bước để xem ảnh trung gian.</em></td>
+    <td><em>Tab “Mô hình 3D”: xoay, zoom, nhìn từ trên; bên phải là tường và phòng trên ảnh gốc.</em></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/app_step_opening.jpg" alt="Bước phép mở"></td>
+    <td><img src="docs/images/app_explain.jpg" alt="Giải thích kỹ thuật và hàm"></td>
+  </tr>
+  <tr>
+    <td><em>Mỗi bước có ảnh trước/sau và số liệu của bước đó (ví dụ phép mở 7×7).</em></td>
+    <td><em>Khung “Kỹ thuật &amp; hàm sử dụng”: tên hàm OpenCV, tham số, công thức.</em></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/app_cubicasa.jpg" alt="Chạy trên ảnh CubiCasa5K"></td>
+    <td><img src="docs/images/app_export.jpg" alt="Xuất file"></td>
+  </tr>
+  <tr>
+    <td><em>Ảnh CubiCasa5K: app chấm luôn Wall IoU và Room F1 so với nhãn. Có thể bật/tắt từng khối để xem ablation trực tiếp.</em></td>
+    <td><em>Tab “Xuất file”: tải DXF (mở bằng AutoCAD/Revit), JSON, trang 3D HTML, ảnh kết quả.</em></td>
+  </tr>
+</table>
+
+## Kết quả chính (CubiCasa5K test, 60 ảnh)
+
+Tham số được tune trên tập val rồi giữ nguyên khi chạy test.
+
+| Phương pháp | Wall IoU | Room F1 |
+|---|---|---|
+| Baseline Otsu (tune trên val) | 0.473 | 0.316 |
+| Baseline Sauvola v1 (tune trên val) | 0.421 | 0.304 |
+| **Đề xuất (k = 7)** | **0.560** | **0.454** |
+| U-Net ResNet-18 (học sâu, để so sánh) | 0.774 | 0.565 |
+
+<p align="center">
+  <img src="report/figures/fig_results_bar.png" alt="Biểu đồ kết quả" width="80%">
+</p>
+
+- **Ablation:** bỏ khối lấp tường rỗng thì Room F1 giảm từ 0.447 xuống 0.229. Đây là khối đóng góp lớn nhất.
+- **Kiểm định bootstrap (5000 lần):**
+  - So với Otsu, phương pháp đề xuất hơn +0.080 Wall IoU, khoảng tin cậy 95 % là [+0.030, +0.134].
+  - U-Net hơn phương pháp đề xuất +0.214 Wall IoU. Đổi lại U-Net cần 300 ảnh có nhãn và 2,5 giờ train.
+
+**Ảnh dự đoán:** xanh lá là tường đúng, đỏ là tường thừa, xanh dương là tường bị sót. Ba ảnh là ca tốt nhất, ca trung vị và ca tệ nhất:
+
+<p align="center">
+  <img src="report/figures/fig_qualitative.png" alt="Ca tốt nhất, trung vị, tệ nhất" width="100%">
+</p>
+
 ## Cài đặt
 
 Python ≥ 3.9.
@@ -33,9 +114,9 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Mở `http://localhost:8501`. App có sẵn ảnh chụp mô phỏng, có thể tải ảnh lên, chỉnh tham số, bật/tắt từng khối (ablation),
-xem từng bước xử lý, mô hình 3D, và tải về DXF / JSON / HTML 3D.
-Ảnh mẫu CubiCasa5K trong app chỉ hiện sau khi tải dữ liệu (bên dưới).
+- Mở `http://localhost:8501`. App có sẵn ảnh chụp mô phỏng, có thể tải ảnh của mình lên.
+- Ảnh mẫu CubiCasa5K chỉ hiện sau khi tải dữ liệu (xem mục Dữ liệu).
+- Muốn bật tuỳ chọn U-Net trong app thì tải `unet_wall.pt` ở Release, đặt vào `prototype/models/`.
 
 Chạy bằng dòng lệnh (không cần giao diện):
 
@@ -63,37 +144,25 @@ python prototype/fetch_cubicasa.py train 300   # chỉ cần để train U-Net
 | Hình cho báo cáo | `python prototype/make_figures.py` |
 | Dựng báo cáo Word | `python report/build_report.py` |
 
-## Kết quả chính (CubiCasa5K test, 60 ảnh)
-
-| Phương pháp | Wall IoU | Room F1 |
-|---|---|---|
-| Baseline Otsu (tune trên val) | 0.473 | 0.316 |
-| Baseline Sauvola v1 (tune trên val) | 0.421 | 0.304 |
-| **Đề xuất (k = 7)** | **0.560** | **0.454** |
-| U-Net ResNet-18 (học sâu, để so sánh) | 0.774 | 0.565 |
-
-- Ablation: bỏ khối lấp tường rỗng làm Room F1 giảm từ 0.447 xuống 0.229. Đây là khối đóng góp lớn nhất.
-- Bootstrap 5000 lần: phương pháp đề xuất hơn Otsu +0.080 Wall IoU, khoảng tin cậy 95 % [+0.030, +0.134].
-- Tự cài đặt: ngưỡng Sauvola dùng ảnh tích phân (`prototype/pipeline.py`), đã kiểm chứng với `skimage.filters.threshold_sauvola`.
-
 ## Cấu trúc
 
 ```
-app.py                     demo Streamlit
+app.py                       demo Streamlit
 requirements.txt
 prototype/
-  pipeline.py              các bước xử lý ảnh (Sauvola tự cài, lấp tường rỗng, tách phòng…)
-  core.py                  lõi dùng chung cho app: xử lý, xuất DXF/JSON/3D
-  synth.py                 sinh bản vẽ tổng hợp + giả lập ảnh chụp điện thoại
-  cubicasa_gt.py           đọc nhãn SVG của CubiCasa5K
-  fetch_cubicasa.py        tải dữ liệu
+  pipeline.py                các bước xử lý ảnh (Sauvola tự cài, lấp tường rỗng, tách phòng…)
+  core.py                    lõi dùng chung cho app: xử lý, xuất DXF/JSON/3D
+  synth.py                   sinh bản vẽ tổng hợp + giả lập ảnh chụp điện thoại
+  cubicasa_gt.py             đọc nhãn SVG của CubiCasa5K
+  fetch_cubicasa.py          tải dữ liệu
   tune.py, eval_cubicasa.py  tune trên val, đánh giá trên test
-  unet_wall.py, eval_unet.py U-Net so sánh
-  explain.py, tech.py      giải thích từng bước cho app
-  params.json              tham số đã đóng băng
-  output/                  kết quả: bảng, hình dự đoán, DXF/3D mẫu
-report/                    báo cáo (docx, pdf), script dựng báo cáo, hình
-video/                     kịch bản và mã dựng video demo (HyperFrames)
+  unet_wall.py, eval_unet.py U-Net để so sánh
+  explain.py, tech.py        nội dung giải thích từng bước cho app
+  params.json                tham số đã đóng băng
+  output/                    kết quả: bảng, hình dự đoán, DXF/3D mẫu
+report/                      báo cáo (docx, pdf), script dựng báo cáo, hình
+docs/images/                 ảnh chụp app dùng trong README
+video/                       kịch bản và mã dựng video demo (HyperFrames)
 ```
 
 ## Khai báo sử dụng AI
